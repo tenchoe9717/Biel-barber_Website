@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Biel Castro Barber — Premium cuts and clean fades in Malden Centre, MA." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Biel Castro Barber | Malden, MA</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -127,31 +130,34 @@
       gap: 1.4rem;
     }
 
-    .nav-links a {
+    .nav-links a,
+    .nav-links a:link,
+    .nav-links a:visited,
+    .nav-links a:hover,
+    .nav-links a:active,
+    .nav-links a:focus {
       font-size: 0.68rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--neutral);
       transition: color 0.2s;
-      /* Remove any border, outline, or background box */
+      /* Aggressive removal of any border, outline, or background box */
       border: none !important;
       outline: none !important;
-      background: transparent !important;
+      background: none !important;
+      background-color: transparent !important;
       box-shadow: none !important;
-      text-decoration: none;
-      padding: 0;
-      margin: 0;
+      text-decoration: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
     }
+    
     .nav-links a:hover { 
       color: var(--black); 
-      border: none !important;
-      outline: none !important;
-      background: transparent !important;
-    }
-    .nav-links a:focus {
-      outline: none !important;
-      border: none !important;
     }
 
     .nav-book {
