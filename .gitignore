@@ -1,0 +1,4 @@
+temp_screenshots/
+node_modules/
+.env
+*.jsonl

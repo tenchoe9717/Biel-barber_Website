@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Biel Castro Barber — Premium cuts and clean fades in Malden Centre, MA." />
+  <title>Biel Castro Barber | Malden, MA</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Variables ──────────────────────────────── */
+    :root {
+      --black:   #000000;
+      --white:   #ffffff;
+      --orange:  #ff622b;
+      --lightest:#eeeeee;
+      --lighter: #cccccc;
+      --light:   #aaaaaa;
+      --neutral: #666666;
+      --dark:    #444444;
+      --darker:  #222222;
+      --darkest: #111111;
+      --grey:    #e1e1e1;
+      --radius:  0.75rem;
+    }
+
+    /* Fluid base — matches reference formula approach */
+    html {
+      font-size: clamp(14px, calc(10px + 0.4vw), 18px);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── Reset ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      opacity: 0;
+      background: var(--black);
+      color: var(--black);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.2;
+      overflow-x: hidden;
+    }
+    body.visible { opacity: 1; transition: opacity 0.8s; }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* Utility */
+    .italic { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
+    .italic-bold { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700; }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      padding: 1.1rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.09);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+
+    /* Left group: logo + separator + links */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-logo img { height: 40px; width: auto; }
+
+    .nav-sep {
+      width: 1px;
+      height: 22px;
+      background: rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .nav-links a {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--neutral);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .nav-book {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: #f4722b;
+      padding: 0.72rem 1.75rem;
+      border-radius: 2rem;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .nav-book:hover { background: #e0611c; transform: scale(1.02); }
+
+    /* Hide nav links on small screens */
+    @media (max-width: 768px) {
+      .nav-sep, .nav-links { display: none; }
+    }
+
+    /* ─── HERO (dark bg + animated shapes) ────────── */
+    .hero {
+      background: #030303;
+      min-height: 100vh;
+      padding: 8rem 1.75rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient colour wash behind shapes */
+    .hero-ambient {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 50%, rgba(99,102,241,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 85% 50%, rgba(244,114,182,0.06) 0%, transparent 70%);
+    }
+
+    /* Vignette: dark edges, open centre */
+    .hero-vignette {
+      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background: linear-gradient(
+        to bottom,
+        rgba(3,3,3,0.75) 0%,
+        transparent 25%,
+        transparent 75%,
+        rgba(3,3,3,0.95) 100%
+      );
+    }
+
+    /* ── Geometric floating shapes ─────────────────── */
+    .hero-shapes { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+
+    /* Wrapper: positions the shape and applies permanent rotation */
+    .shape-wrap { position: absolute; }
+
+    /* Pill: the visible element — animated */
+    .shape-pill {
+      width: 100%; height: 100%;
+      border-radius: 9999px;
+      border: 2px solid rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px 0 rgba(255,255,255,0.08);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      animation: shapeEnter 2.4s cubic-bezier(0.23,0.86,0.39,0.96) both;
+    }
+    .shape-pill::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18), transparent 70%);
+    }
+
+    .pill-indigo { background: linear-gradient(to right, rgba(99,102,241,0.18), transparent); }
+    .pill-rose   { background: linear-gradient(to right, rgba(244,114,182,0.18), transparent); }
+    .pill-violet { background: linear-gradient(to right, rgba(139,92,246,0.18), transparent); }
+    .pill-amber  { background: linear-gradient(to right, rgba(251,191,36,0.18), transparent); }
+    .pill-cyan   { background: linear-gradient(to right, rgba(34,211,238,0.18), transparent); }
+
+    /* Per-shape size, position, rotation (rotate is CSS-independent of transform) */
+    #s1 { width: 600px; height: 140px; left: -10%; top: 15%; rotate: 12deg; }
+    #s2 { width: 500px; height: 120px; right: -5%; top: 68%; rotate: -15deg; }
+    #s3 { width: 300px; height: 80px;  left: 5%;   bottom: 8%; rotate: -8deg; }
+    #s4 { width: 200px; height: 60px;  right: 15%; top: 10%; rotate: 20deg; }
+    #s5 { width: 150px; height: 40px;  left: 20%;  top: 6%;  rotate: -25deg; }
+
+    /* Staggered entrance delays */
+    #s1 .shape-pill { animation-delay: 0.3s; }
+    #s2 .shape-pill { animation-delay: 0.5s; }
+    #s3 .shape-pill { animation-delay: 0.4s; }
+    #s4 .shape-pill { animation-delay: 0.6s; }
+    #s5 .shape-pill { animation-delay: 0.7s; }
+
+    @keyframes shapeEnter {
+      from { opacity: 0; transform: translateY(-150px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shapeFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%      { transform: translateY(50px); }
+    }
+    .shape-pill.floating {
+      opacity: 1;
+      animation: shapeFloat 6s ease-in-out infinite !important;
+    }
+    /* Vary float phase so shapes don't all move in sync */
+    #s2 .shape-pill.floating { animation-delay: -1.5s !important; }
+    #s3 .shape-pill.floating { animation-delay: -3s !important; }
+    #s4 .shape-pill.floating { animation-delay: -0.8s !important; }
+    #s5 .shape-pill.floating { animation-delay: -2.2s !important; }
+
+    /* Hero content sits above shapes */
+    .hero > :not(.hero-ambient):not(.hero-shapes):not(.hero-vignette) { position: relative; z-index: 3; }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2rem;
+    }
+    .eyebrow-dot {
+      width: 5px; height: 5px;
+      background: var(--orange);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.6rem, 7.5vw, 7.5rem);
+      font-weight: 800;
+      line-height: 0.93;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      margin-bottom: 3.5rem;
+    }
+    .hero-headline .italic { color: rgba(255,255,255,0.85); }
+
+    /* Inline photo chip */
+    .photo-chip {
+      display: inline-block;
+      width: clamp(120px, 16vw, 260px);
+      height: clamp(80px, 11vw, 180px);
+      border-radius: 1rem;
+      overflow: hidden;
+      vertical-align: middle;
+      position: relative;
+      top: -0.08em;
+      margin: 0 0.25em;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .photo-chip img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-book {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border-radius: 2rem;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-book:hover { transform: scale(1.02); background: #e8541f; }
+    .btn-book svg { width: 14px; height: 14px; }
+
+    .hero-meta {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+    }
+
+    /* ─── QUOTE BAND (dark photo) ─────────────────── */
+    .quote-band {
+      position: relative;
+      height: 68vh;
+      min-height: 400px;
+      overflow: hidden;
+    }
+    .quote-band-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      filter: brightness(0.5);
+    }
+    .quote-band-shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.65) 100%);
+    }
+    .quote-band-text {
+      position: absolute;
+      bottom: 3rem; left: 1.75rem; right: 1.75rem;
+      color: var(--white);
+    }
+    .quote-band-text p {
+      font-size: clamp(1.8rem, 5vw, 5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      max-width: 18ch;
+    }
+
+    /* ─── SERVICES (white bg) ─────────────────────── */
+    .services {
+      background: #030303;
+      padding: 4rem 1.75rem 5rem;
+    }
+
+    .section-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .display-heading {
+      font-size: clamp(3.2rem, 8.5vw, 8.5rem);
+      font-weight: 800;
+      line-height: 0.88;
+      letter-spacing: -0.035em;
+      color: var(--white);
+    }
+
+    .section-aside {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+      line-height: 1.65;
+      max-width: 22ch;
+      padding-bottom: 0.4rem;
+    }
+
+    /* Service cards — same card-grid pattern as Locations */
+    .svc-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .svc-card {
+      background: var(--lightest);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 160px;
+      gap: 1.5rem;
+      transition: background 0.2s;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      cursor: default;
+    }
+    .svc-card:hover { background: var(--grey); }
+
+    .svc-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .svc-card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.01em;
+    }
+    .svc-arrow {
+      width: 1.8rem; height: 1.8rem;
+      border: 1.5px solid var(--lighter);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      color: var(--orange);
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .svc-card:hover .svc-arrow { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+    .svc-price {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 2rem;
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    /* Last card spans to fill 3-col for odd count */
+    .svc-card:last-child:nth-child(3n - 1) { grid-column: span 2; }
+
+    /* ─── FEEL GOOD (orange bg) ───────────────────── */
+    .feel-good {
+      background: #030303;
+      padding: 4.5rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .feel-good-wave {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      filter: blur(4px);
+      transform: scale(1.03);
+    }
+    .feel-good > *:not(.feel-good-wave) { position: relative; z-index: 1; }
+    .feel-good p {
+      font-size: clamp(2.2rem, 6.5vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+
+    /* ─── WORK (white bg) ─────────────────────────── */
+    .work {
+      background: var(--white);
+      padding: 4rem 1.75rem 5rem;
+    }
+
+    .work-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+    }
+    .work-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: #d9d9d9; /* fallback when image is missing */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .work-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.55s ease;
+      background: #d9d9d9;
+      /* hide broken-image icon, show fallback color instead */
+      color: transparent;
+    }
+    .work-card:hover img { transform: scale(1.05); }
+
+    /* ─── VISIT (white bg) ────────────────────────── */
+    .visit {
+      background: var(--white);
+      padding: 4.5rem 1.75rem;
+      border-top: 1px solid var(--grey);
+    }
+    .visit-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    .visit-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 0.9rem;
+    }
+    .visit-text {
+      font-size: 1.1rem;
+      color: var(--neutral);
+      line-height: 1.85;
+    }
+    .visit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.95rem;
+      color: var(--orange);
+      letter-spacing: 0.05em;
+      margin-top: 0.75rem;
+      transition: opacity 0.2s;
+    }
+    .visit-link:hover { opacity: 0.7; }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 2.5rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo img { height: 40px; filter: invert(1); }
+    .footer-links {
+      display: flex; gap: 2rem;
+      font-size: 0.7rem; color: #555;
+    }
+    .footer-links a { transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 0.62rem; color: #333; letter-spacing: 0.04em; }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 860px) {
+      .svc-cards { grid-template-columns: repeat(2, 1fr); }
+      .svc-card:last-child:nth-child(3n - 1) { grid-column: span 1; }
+      .work-grid { grid-template-columns: repeat(2, 1fr); }
+      .visit-cols { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 580px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero-eyebrow { flex-direction: column; gap: 0.2rem; }
+      .hero-eyebrow .eyebrow-dot,
+      .hero-eyebrow span:nth-child(3) { display: none; }
+      .hero, .services, .work, .visit, .feel-good { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .quote-band-text { left: 1.25rem; right: 1.25rem; }
+      .svc-cards { grid-template-columns: 1fr; }
+      .svc-card:last-child:nth-child(3n - 1) { grid-column: span 1; }
+      .work-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+      .visit-cols { grid-template-columns: 1fr; gap: 1.75rem; }
+      footer { flex-direction: column; align-items: flex-start; gap: 1.25rem; padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ───────────────────────────────────────── -->
+  <nav id="nav">
+    <div class="nav-left">
+      <a href="#" class="nav-logo" aria-label="Biel Castro Barber — Home">
+        <img src="619123323_18112444498722320_1882993782832653147_n.jpg" alt="Biel Castro Barber" />
+      </a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <div class="nav-links">
+        <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://wa.me/17812043400" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener">Directions</a>
+      </div>
+    </div>
+    <a href="https://wa.me/17812043400" target="_blank" rel="noopener" class="nav-book">Book Now</a>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────────── -->
+  <section class="hero">
+
+    <!-- Background layers -->
+    <div class="hero-ambient" aria-hidden="true"></div>
+    <div class="hero-shapes" aria-hidden="true">
+      <div class="shape-wrap" id="s1"><div class="shape-pill pill-indigo"></div></div>
+      <div class="shape-wrap" id="s2"><div class="shape-pill pill-rose"></div></div>
+      <div class="shape-wrap" id="s3"><div class="shape-pill pill-violet"></div></div>
+      <div class="shape-wrap" id="s4"><div class="shape-pill pill-amber"></div></div>
+      <div class="shape-wrap" id="s5"><div class="shape-pill pill-cyan"></div></div>
+    </div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span>Malden Centre, Massachusetts</span>
+      <span>&nbsp;·&nbsp;</span>
+      <span>Mon – Sun &nbsp;10am – 7pm</span>
+    </div>
+
+    <h1 class="hero-headline">
+      Malden-based<br>
+      barbershop <span class="italic">specializing</span><br>
+      in <span class="italic">modern</span> cuts<br>
+      &amp;&nbsp;clean fades
+    </h1>
+
+    <div class="hero-actions">
+      <a href="https://wa.me/17812043400" target="_blank" rel="noopener" class="btn-book">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Book on WhatsApp
+      </a>
+      <span class="hero-meta">104A Main St, Malden Centre MA 02148</span>
+    </div>
+  </section>
+
+  <!-- ── QUOTE BAND ─────────────────────────────────── -->
+  <div class="quote-band">
+    <img class="quote-band-img" src="Gemini_Generated_Image_jop37ejop37ejop3.png" alt="Biel Castro at work" />
+    <div class="quote-band-shade"></div>
+    <div class="quote-band-text">
+      <p>It's all about<br>the <span class="italic">precision</span><br>to look your best</p>
+    </div>
+  </div>
+
+  <!-- ── SERVICES ───────────────────────────────────── -->
+  <section class="services">
+    <div class="section-top">
+      <h2 class="display-heading">Services<span class="italic" style="color:var(--orange)">*</span></h2>
+      <p class="section-aside">Premium cuts at honest prices — every time.</p>
+    </div>
+    <div class="svc-cards">
+      <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Classic+Haircut+%28%2435%29" target="_blank" rel="noopener">
+        <div class="svc-card-top">
+          <span class="svc-card-name">Classic Haircut</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <span class="svc-price">$35</span>
+      </a>
+      <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Skin+Fade+%28%2440%29" target="_blank" rel="noopener">
+        <div class="svc-card-top">
+          <span class="svc-card-name">Skin Fade</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <span class="svc-price">$40</span>
+      </a>
+      <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Beard+Trim+%28%2420%29" target="_blank" rel="noopener">
+        <div class="svc-card-top">
+          <span class="svc-card-name">Beard Trim</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <span class="svc-price">$20</span>
+      </a>
+      <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Haircut+%2B+Beard+%28%2450%29" target="_blank" rel="noopener">
+        <div class="svc-card-top">
+          <span class="svc-card-name">Haircut + Beard</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <span class="svc-price">$50</span>
+      </a>
+      <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Kids+Cut+%28%2425%29" target="_blank" rel="noopener">
+        <div class="svc-card-top">
+          <span class="svc-card-name">Kids Cut</span>
+          <span class="svc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <span class="svc-price">$25</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FEEL GOOD ──────────────────────────────────── -->
+  <div class="feel-good">
+    <canvas class="feel-good-wave" id="feel-good-wave" aria-hidden="true"></canvas>
+    <p>
+      When you look good,<br>
+      <span class="italic">you feel good</span>
+    </p>
+  </div>
+
+  <!-- ── WORK ───────────────────────────────────────── -->
+  <section class="work">
+    <div class="section-top">
+      <h2 class="display-heading">Work<span class="italic" style="color:var(--orange)">*</span></h2>
+      <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" style="font-size:0.7rem;color:var(--light);letter-spacing:.05em;padding-bottom:.4rem;">@biel88castro &nbsp;→</a>
+    </div>
+    <div class="work-grid">
+      <div class="work-card"><img src="639755776_17912707878300278_2215699212216386150_n.jpg" alt="Classic taper cut" loading="lazy" /></div>
+      <div class="work-card"><img src="613167293_885291903897928_8920933766048804419_n.jpg" alt="Curly top fade" loading="lazy" /></div>
+      <div class="work-card"><img src="590915226_17902294155300278_5112708298581932923_n.jpg" alt="Kids fade cut" loading="lazy" /></div>
+      <div class="work-card"><img src="619813452_1386039700201231_7619991712483124800_n.jpg" alt="Beard trim in action" loading="lazy" /></div>
+      <div class="work-card"><img src="622100414_2994575394245052_5915576790020905740_n.jpg" alt="Kids cut with design" loading="lazy" /></div>
+      <div class="work-card"><img src="588645027_1281067574068968_125705883318333094_n.jpg" alt="Beard trim" loading="lazy" /></div>
+      <div class="work-card"><img src="Gemini_Generated_Image_yznhmkyznhmkyznh.png" alt="Straight razor beard trim" loading="lazy" /></div>
+      <div class="work-card"><img src="Gemini_Generated_Image_2mqvlb2mqvlb2mqv.png" alt="Biel cutting hair" loading="lazy" /></div>
+    </div>
+  </section>
+
+  <!-- ── VISIT ──────────────────────────────────────── -->
+  <section class="visit">
+    <h2 class="display-heading" style="font-size:clamp(2.2rem,5.5vw,5.5rem)">Visit <span class="italic">us</span></h2>
+    <div class="visit-cols">
+      <div>
+        <p class="visit-label">Location</p>
+        <p class="visit-text">104A Main St<br>Malden Centre, MA 02148</p>
+        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener" class="visit-link">Get Directions →</a>
+      </div>
+      <div>
+        <p class="visit-label">Hours</p>
+        <p class="visit-text">Monday – Sunday<br>10:00 AM – 7:00 PM</p>
+      </div>
+      <div>
+        <p class="visit-label">Book &amp; Follow</p>
+        <p class="visit-text"><a href="https://wa.me/17812043400" target="_blank" rel="noopener" style="color:var(--orange)">WhatsApp →</a></p>
+        <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" class="visit-link" style="margin-top:.5rem">@biel88castro →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRAND PANEL ───────────────────────────────────── -->
+  <div style="position: relative; width: 100%; line-height: 0;">
+    <!-- The Gemini image as the visual -->
+    <img src="Gemini_Generated_Image_b406swb406swb406.png" alt="Biel Castro Barber — Meet your best self"
+         style="width: 100%; display: block; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" />
+    <!-- Transparent clickable links over the Instagram / Facebook / WhatsApp text in the image -->
+    <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" aria-label="Instagram"
+       style="position:absolute; top:7%; left:51%; width:18%; height:8%; cursor:pointer;"></a>
+    <a href="https://facebook.com/bielcastrobarber" target="_blank" rel="noopener" aria-label="Facebook"
+       style="position:absolute; top:16%; left:51%; width:16%; height:8%; cursor:pointer;"></a>
+    <a href="https://wa.me/17812043400" target="_blank" rel="noopener" aria-label="WhatsApp"
+       style="position:absolute; top:25%; left:51%; width:18%; height:8%; cursor:pointer;"></a>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer>
+    <a href="#" class="footer-logo" aria-label="Biel Castro Barber">
+      <img src="619123323_18112444498722320_1882993782832653147_n.jpg" alt="Biel Castro Barber" />
+    </a>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/17812043400" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener">Directions</a>
+      <a href="links.html">Links</a>
+    </nav>
+    <p class="footer-copy">© 2025 Biel Castro Barber · Malden, MA</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('visible');
+
+      // ── Wavy background for Feel Good section ─────────────
+      (function initServicesWave() {
+        const canvas = document.getElementById('feel-good-wave');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const colors = ['#38bdf8', '#818cf8', '#c084fc', '#e879f9', '#22d3ee'];
+        const waveWidth = 50;
+        let w, h, nt = 0, animId;
+
+        function resize() {
+          const section = canvas.parentElement;
+          w = canvas.width  = section.offsetWidth;
+          h = canvas.height = section.offsetHeight;
+        }
+
+        // Pseudo-noise: layered sines produce organic, noise-like waves
+        function noise(x, offset, t) {
+          return (
+            Math.sin(x / 800 + t * 3 + offset) *
+            Math.sin(x / 350 + t * 1.8 + offset * 1.4) *
+            Math.sin(x / 200 + t * 0.9 + offset * 0.7) * 0.45
+          );
+        }
+
+        function render() {
+          nt += 0.006;
+          // Semi-transparent fill — creates trail/fade effect
+          ctx.fillStyle = '#030303';
+          ctx.globalAlpha = 0.35;
+          ctx.fillRect(0, 0, w, h);
+
+          colors.forEach((color, i) => {
+            ctx.beginPath();
+            ctx.lineWidth = waveWidth;
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 0.8;
+            for (let x = 0; x <= w; x += 5) {
+              const y = noise(x, 0.3 * i, nt) * 180 + h * 0.5;
+              x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            ctx.closePath();
+          });
+
+          animId = requestAnimationFrame(render);
+        }
+
+        resize();
+        new ResizeObserver(resize).observe(canvas.parentElement);
+        render();
+      })();
+
+      // Chain float animation after each shape's entrance completes
+      const entranceDuration = 2400; // ms
+      document.querySelectorAll('.shape-pill').forEach(pill => {
+        const delayMs = parseFloat(getComputedStyle(pill).animationDelay) * 1000;
+        setTimeout(() => {
+          pill.classList.add('floating');
+        }, delayMs + entranceDuration + 50);
+      });
+    });
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  </script>
+</body>
+</html>
