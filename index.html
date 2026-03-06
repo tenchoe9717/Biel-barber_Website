@@ -25,6 +25,7 @@
       --darkest: #111111;
       --grey:    #e1e1e1;
       --radius:  0.75rem;
+      --nav-height: 70px;
     }
 
     /* Fluid base — matches reference formula approach */
@@ -58,21 +59,49 @@
 
     /* ─── NAV ─────────────────────────────────────── */
     nav {
-      position: fixed;
-      inset: 0 0 auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       padding: 1.1rem 1.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      background: transparent;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, position 0.3s ease;
+      min-height: var(--nav-height);
+    }
+
+    nav.scrolled {
+      position: fixed;
       background: rgba(255,255,255,0.96);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(0,0,0,0.09);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
-      transition: box-shadow 0.3s;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
     }
-    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+
+    /* Nav links color transition for transparent state */
+    nav:not(.scrolled) .nav-links a {
+      color: rgba(255,255,255,0.85);
+      transition: color 0.3s ease;
+    }
+
+    nav:not(.scrolled) .nav-links a:hover {
+      color: var(--white);
+    }
+
+    /* Logo invert for dark background */
+    nav:not(.scrolled) .nav-logo img {
+      filter: brightness(0) invert(1);
+      transition: filter 0.3s ease;
+    }
+
+    nav.scrolled .nav-logo img {
+      filter: none;
+    }
 
     /* Left group: logo + separator + links */
     .nav-left {
@@ -129,7 +158,8 @@
     .hero {
       background: #030303;
       min-height: 100vh;
-      padding: 8rem 1.75rem 5rem;
+      min-height: 100dvh; /* Dynamic viewport height for mobile */
+      padding: calc(var(--nav-height) + env(safe-area-inset-top, 0px) + 3rem) 1.75rem 5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -137,6 +167,12 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+    }
+
+    /* Ensure CTA is visible above fold */
+    .hero-actions {
+      margin-top: auto;
+      margin-bottom: 2rem;
     }
 
     /* Ambient colour wash behind shapes */
@@ -811,9 +847,25 @@
     });
 
     const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
+    let lastScrollY = 0;
+
+    function updateNav() {
+      const scrollY = window.scrollY;
+      const navHeight = nav.offsetHeight;
+
+      // Add scrolled class when scrolled past navbar height
+      if (scrollY > navHeight) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+
+      lastScrollY = scrollY;
+    }
+
+    // Run on load and scroll
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
   </script>
 </body>
 </html>
