@@ -117,6 +117,8 @@
       height: 22px;
       background: rgba(0,0,0,0.15);
       flex-shrink: 0;
+      border: none;
+      outline: none;
     }
 
     .nav-links {
@@ -132,8 +134,25 @@
       text-transform: uppercase;
       color: var(--neutral);
       transition: color 0.2s;
+      /* Remove any border, outline, or background box */
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      text-decoration: none;
+      padding: 0;
+      margin: 0;
     }
-    .nav-links a:hover { color: var(--black); }
+    .nav-links a:hover { 
+      color: var(--black); 
+      border: none !important;
+      outline: none !important;
+      background: transparent !important;
+    }
+    .nav-links a:focus {
+      outline: none !important;
+      border: none !important;
+    }
 
     .nav-book {
       font-size: 0.7rem;
