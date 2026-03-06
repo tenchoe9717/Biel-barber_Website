@@ -485,38 +485,6 @@
       color: var(--white);
     }
 
-    /* ─── WORK (white bg) ─────────────────────────── */
-    .work {
-      background: var(--white);
-      padding: 4rem 1.75rem 5rem;
-    }
-
-    .work-grid {
-      margin-top: 2.5rem;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.65rem;
-    }
-    .work-card {
-      border-radius: var(--radius);
-      overflow: hidden;
-      aspect-ratio: 3/4;
-      background: #d9d9d9; /* fallback when image is missing */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .work-card img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      transition: transform 0.55s ease;
-      background: #d9d9d9;
-      /* hide broken-image icon, show fallback color instead */
-      color: transparent;
-    }
-    .work-card:hover img { transform: scale(1.05); }
-
     /* ─── VISIT (white bg) ────────────────────────── */
     .visit {
       background: var(--white);
@@ -576,7 +544,6 @@
     @media (max-width: 860px) {
       .svc-cards { grid-template-columns: repeat(2, 1fr); }
       .svc-card:last-child:nth-child(3n - 1) { grid-column: span 1; }
-      .work-grid { grid-template-columns: repeat(2, 1fr); }
       .visit-cols { grid-template-columns: 1fr 1fr; gap: 2rem; }
     }
 
@@ -610,7 +577,6 @@
         <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener">Directions</a>
       </div>
     </div>
-    <a href="https://wa.me/17812043400" target="_blank" rel="noopener" class="nav-book">Book Now</a>
   </nav>
 
   <!-- ── HERO ──────────────────────────────────────── -->
@@ -712,24 +678,6 @@
       <span class="italic">you feel good</span>
     </p>
   </div>
-
-  <!-- ── WORK ───────────────────────────────────────── -->
-  <section class="work">
-    <div class="section-top">
-      <h2 class="display-heading">Work<span class="italic" style="color:var(--orange)">*</span></h2>
-      <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" style="font-size:0.7rem;color:var(--light);letter-spacing:.05em;padding-bottom:.4rem;">@biel88castro &nbsp;→</a>
-    </div>
-    <div class="work-grid">
-      <div class="work-card"><img src="639755776_17912707878300278_2215699212216386150_n.jpg" alt="Classic taper cut" loading="lazy" /></div>
-      <div class="work-card"><img src="613167293_885291903897928_8920933766048804419_n.jpg" alt="Curly top fade" loading="lazy" /></div>
-      <div class="work-card"><img src="590915226_17902294155300278_5112708298581932923_n.jpg" alt="Kids fade cut" loading="lazy" /></div>
-      <div class="work-card"><img src="619813452_1386039700201231_7619991712483124800_n.jpg" alt="Beard trim in action" loading="lazy" /></div>
-      <div class="work-card"><img src="622100414_2994575394245052_5915576790020905740_n.jpg" alt="Kids cut with design" loading="lazy" /></div>
-      <div class="work-card"><img src="588645027_1281067574068968_125705883318333094_n.jpg" alt="Beard trim" loading="lazy" /></div>
-      <div class="work-card"><img src="Gemini_Generated_Image_yznhmkyznhmkyznh.png" alt="Straight razor beard trim" loading="lazy" /></div>
-      <div class="work-card"><img src="Gemini_Generated_Image_2mqvlb2mqvlb2mqv.png" alt="Biel cutting hair" loading="lazy" /></div>
-    </div>
-  </section>
 
   <!-- ── VISIT ──────────────────────────────────────── -->
   <section class="visit">
