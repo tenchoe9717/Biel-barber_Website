@@ -124,6 +124,33 @@
       outline: none;
     }
 
+    /* Language Toggle */
+    .lang-toggle {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.4rem 0.8rem;
+      border: 1.5px solid var(--orange);
+      border-radius: 2rem;
+      background: transparent;
+      color: var(--orange);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-left: 1rem;
+    }
+    .lang-toggle:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+    nav:not(.scrolled) .lang-toggle {
+      border-color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.9);
+    }
+    nav:not(.scrolled) .lang-toggle:hover {
+      background: rgba(255,255,255,0.9);
+      color: var(--black);
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -631,8 +658,9 @@
       <div class="nav-links">
         <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener">Instagram</a>
         <a href="https://wa.me/17812043400" target="_blank" rel="noopener">WhatsApp</a>
-        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener">Directions</a>
+        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener" data-en="Directions" data-pt="Como Chegar">Directions</a>
       </div>
+      <button id="lang-toggle" class="lang-toggle" aria-label="Switch language">EN/PT</button>
     </div>
   </nav>
 
@@ -652,22 +680,22 @@
 
     <div class="hero-eyebrow">
       <span class="eyebrow-dot"></span>
-      <span>Malden Centre, Massachusetts</span>
+      <span data-en="Malden Centre, Massachusetts" data-pt="Malden Centre, Massachusetts">Malden Centre, Massachusetts</span>
       <span>&nbsp;·&nbsp;</span>
-      <span>Mon – Sun &nbsp;10am – 7pm</span>
+      <span data-en="Mon – Sun 10am – 7pm" data-pt="Seg – Dom 10h – 19h">Mon – Sun &nbsp;10am – 7pm</span>
     </div>
 
     <h1 class="hero-headline">
-      Malden-based<br>
-      barbershop <span class="italic">specializing</span><br>
-      in <span class="italic">modern</span> cuts<br>
-      &amp;&nbsp;clean fades
+      <span data-en="Malden-based" data-pt="Em Malden">Malden-based</span><br>
+      <span data-en="barbershop" data-pt="barbearia">barbershop</span> <span class="italic" data-en="specializing" data-pt="especializada">specializing</span><br>
+      <span data-en="in" data-pt="em">in</span> <span class="italic" data-pt="cortes">modern</span> <span data-en="cuts" data-pt="modernos">cuts</span><br>
+      <span data-en="& clean fades" data-pt="& degradê limpo">&amp;&nbsp;clean fades</span>
     </h1>
 
     <div class="hero-actions">
       <a href="https://wa.me/17812043400" target="_blank" rel="noopener" class="btn-book">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Book on WhatsApp
+        <span data-en="Book on WhatsApp" data-pt="Agendar no WhatsApp">Book on WhatsApp</span>
       </a>
       <span class="hero-meta">104A Main St, Malden Centre MA 02148</span>
     </div>
@@ -685,41 +713,41 @@
   <!-- ── SERVICES ───────────────────────────────────── -->
   <section class="services">
     <div class="section-top">
-      <h2 class="display-heading">Services<span class="italic" style="color:var(--orange)">*</span></h2>
-      <p class="section-aside">Premium cuts at honest prices — every time.</p>
+      <h2 class="display-heading"><span data-en="Services" data-pt="Serviços">Services</span><span class="italic" style="color:var(--orange)">*</span></h2>
+      <p class="section-aside" data-en="Premium cuts at honest prices — every time." data-pt="Cortes premium a preços justos — sempre.">Premium cuts at honest prices — every time.</p>
     </div>
     <div class="svc-cards">
       <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Classic+Haircut+%28%2435%29" target="_blank" rel="noopener">
         <div class="svc-card-top">
-          <span class="svc-card-name">Classic Haircut</span>
+          <span class="svc-card-name" data-en="Classic Haircut" data-pt="Corte Clássico">Classic Haircut</span>
           <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
         <span class="svc-price">$35</span>
       </a>
       <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Skin+Fade+%28%2440%29" target="_blank" rel="noopener">
         <div class="svc-card-top">
-          <span class="svc-card-name">Skin Fade</span>
+          <span class="svc-card-name" data-en="Skin Fade" data-pt="Degradê na Pele">Skin Fade</span>
           <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
         <span class="svc-price">$40</span>
       </a>
       <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Beard+Trim+%28%2420%29" target="_blank" rel="noopener">
         <div class="svc-card-top">
-          <span class="svc-card-name">Beard Trim</span>
+          <span class="svc-card-name" data-en="Beard Trim" data-pt="Barba">Beard Trim</span>
           <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
         <span class="svc-price">$20</span>
       </a>
       <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Haircut+%2B+Beard+%28%2450%29" target="_blank" rel="noopener">
         <div class="svc-card-top">
-          <span class="svc-card-name">Haircut + Beard</span>
+          <span class="svc-card-name" data-en="Haircut + Beard" data-pt="Corte + Barba">Haircut + Beard</span>
           <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
         <span class="svc-price">$50</span>
       </a>
       <a class="svc-card" href="https://wa.me/17812043400?text=Hi+Biel%2C+I'd+like+to+book+a+Kids+Cut+%28%2425%29" target="_blank" rel="noopener">
         <div class="svc-card-top">
-          <span class="svc-card-name">Kids Cut</span>
+          <span class="svc-card-name" data-en="Kids Cut" data-pt="Corte Infantil">Kids Cut</span>
           <span class="svc-arrow" aria-hidden="true">↗</span>
         </div>
         <span class="svc-price">$25</span>
@@ -731,15 +759,15 @@
   <div class="feel-good">
     <canvas class="feel-good-wave" id="feel-good-wave" aria-hidden="true"></canvas>
     <p>
-      When you look good,<br>
-      <span class="italic">you feel good</span>
+      <span data-en="When you look good," data-pt="Quando você fica bonito,">When you look good,</span><br>
+      <span class="italic" data-en="you feel good" data-pt="você se sente bem">you feel good</span>
     </p>
   </div>
 
   <!-- ── WORK ───────────────────────────────────────── -->
   <section class="work">
     <div class="section-top">
-      <h2 class="display-heading">Work<span class="italic" style="color:var(--orange)">*</span></h2>
+      <h2 class="display-heading"><span data-en="Work" data-pt="Trabalhos">Work</span><span class="italic" style="color:var(--orange)">*</span></h2>
       <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" style="font-size:0.7rem;color:var(--light);letter-spacing:.05em;padding-bottom:.4rem;">@biel88castro &nbsp;→</a>
     </div>
     <div class="work-grid">
@@ -756,19 +784,19 @@
 
   <!-- ── VISIT ──────────────────────────────────────── -->
   <section class="visit">
-    <h2 class="display-heading" style="font-size:clamp(2.2rem,5.5vw,5.5rem)">Visit <span class="italic">us</span></h2>
+    <h2 class="display-heading" style="font-size:clamp(2.2rem,5.5vw,5.5rem)"><span data-en="Visit" data-pt="Visite">Visit</span> <span class="italic" data-en="us" data-pt="nos">us</span></h2>
     <div class="visit-cols">
       <div>
-        <p class="visit-label">Location</p>
+        <p class="visit-label" data-en="Location" data-pt="Localização">Location</p>
         <p class="visit-text">104A Main St<br>Malden Centre, MA 02148</p>
-        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener" class="visit-link">Get Directions →</a>
+        <a href="https://maps.google.com/?q=104+A+Main+St,+Malden,+MA+02148" target="_blank" rel="noopener" class="visit-link" data-en="Get Directions →" data-pt="Como Chegar →">Get Directions →</a>
       </div>
       <div>
-        <p class="visit-label">Hours</p>
-        <p class="visit-text">Monday – Sunday<br>10:00 AM – 7:00 PM</p>
+        <p class="visit-label" data-en="Hours" data-pt="Horário">Hours</p>
+        <p class="visit-text" data-en="Monday – Sunday<br>10:00 AM – 7:00 PM" data-pt="Segunda – Domingo<br>10:00 – 19:00">Monday – Sunday<br>10:00 AM – 7:00 PM</p>
       </div>
       <div>
-        <p class="visit-label">Book &amp; Follow</p>
+        <p class="visit-label" data-en="Book & Follow" data-pt="Agende & Siga">Book &amp; Follow</p>
         <p class="visit-text"><a href="https://wa.me/17812043400" target="_blank" rel="noopener" style="color:var(--orange)">WhatsApp →</a></p>
         <a href="https://instagram.com/biel88castro" target="_blank" rel="noopener" class="visit-link" style="margin-top:.5rem">@biel88castro →</a>
       </div>
@@ -888,6 +916,33 @@
     // Run on load and scroll
     updateNav();
     window.addEventListener('scroll', updateNav, { passive: true });
+
+    // Language Toggle
+    (function() {
+      const toggle = document.getElementById('lang-toggle');
+      let currentLang = 'en';
+      
+      // Check saved preference
+      const savedLang = localStorage.getItem('lang');
+      if (savedLang) {
+        currentLang = savedLang;
+        updateLanguage(currentLang);
+      }
+      
+      toggle.addEventListener('click', function() {
+        currentLang = currentLang === 'en' ? 'pt' : 'en';
+        updateLanguage(currentLang);
+        localStorage.setItem('lang', currentLang);
+      });
+      
+      function updateLanguage(lang) {
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = el.getAttribute('data-' + lang);
+        });
+        toggle.textContent = lang === 'en' ? 'EN/PT' : 'PT/EN';
+        document.documentElement.lang = lang === 'en' ? 'en' : 'pt';
+      }
+    })();
   </script>
 </body>
 </html>
